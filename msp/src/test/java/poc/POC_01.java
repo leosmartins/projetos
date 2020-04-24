@@ -1,15 +1,13 @@
 package poc;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import static msp.Enumeradores.navegadores.CHROME;
+import static msp.WebApps.webAppDriver;
 import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class POC_01 {
 
@@ -19,10 +17,7 @@ public class POC_01 {
 
 	@BeforeClass
 	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(30, SECONDS);
+		driver = webAppDriver(CHROME, 30);
 	}
 
 	@AfterClass
@@ -30,7 +25,7 @@ public class POC_01 {
 		driver.quit();
 	}
 
-	@Test
+	@Test(description = "Teste de navegação e asset usando WebDriverManager")
 	public void Teste01() throws InterruptedException {
 		driver.get(url);
 		assertEquals(driver.getTitle(), titleEsperado);
